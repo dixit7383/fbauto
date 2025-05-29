@@ -4,13 +4,11 @@ from datetime import datetime
 
 def post_to_facebook():
     try:
-        print("🔄 Attempting to post...")
-        page_id = os.getenv('PAGE_ID')
+        # Get credentials
         token = os.getenv('FB_TOKEN')
+        page_id = os.getenv('PAGE_ID')
         
-        print(f"ℹ️ Page ID: {page_id}")
-        print(f"ℹ️ Token: {'*' * len(token[:-4]) + token[-4:]}" )  # Mask token
-        
+        # Make the post
         response = requests.post(
             f"https://graph.facebook.com/{page_id}/feed",
             params={
@@ -18,10 +16,9 @@ def post_to_facebook():
                 "access_token": token
             }
         )
-        print(f"✅ Facebook response: {response.json()}")
-        print("Posted successfully!")
+        print("✅ POSTED! Facebook response:", response.json())
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print("❌ FAILED:", str(e))
 
 if __name__ == "__main__":
     post_to_facebook()
