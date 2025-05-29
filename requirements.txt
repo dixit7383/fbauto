@@ -1,2 +1,0 @@
-facebook-sdk
-python-dotenv
