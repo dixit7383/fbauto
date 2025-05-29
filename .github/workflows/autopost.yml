@@ -1,30 +1,20 @@
-name: AutoPost to Facebook  # Name of your workflow
-on:  # When the workflow should run
+name: Facebook Auto-Poster
+on:
   schedule:
-    - cron: '0 12 * * *'  # Runs daily at 12 PM UTC
-  workflow_dispatch:  # Allows manual triggering
+    - cron: '0 8,20 * * *'  # Posts at 8 AM and 8 PM daily
+  workflow_dispatch:  # Allows manual runs
 
 jobs:
-  autopost:  # Job ID
-    runs-on: ubuntu-latest  # OS for the virtual machine
-
+  post:
+    runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out your repository code
       - uses: actions/checkout@v4
-
-      # Step 2: Set up Python 3.10
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      # Step 3: Install dependencies from requirements.txt
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      # Step 4: Run the Python script with secrets
-      - name: Post to Facebook
+      - run: pip install requests
+      - name: Run Auto-Post
         env:
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}  # From GitHub Secrets
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}        # From GitHub Secrets
-        run: python fb_autopost.py
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+          PAGE_ID: ${{ secrets.PAGE_ID }}
+        run: python fbauto.py
