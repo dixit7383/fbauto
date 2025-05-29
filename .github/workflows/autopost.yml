@@ -1,8 +1,8 @@
 name: Facebook Auto-Poster
 on:
+  workflow_dispatch:  # Allow manual runs
   schedule:
-    - cron: '0 8,20 * * *'  # Posts at 8 AM and 8 PM daily
-  workflow_dispatch:  # Allows manual runs
+    - cron: '0 8 * * *'  # 8 AM daily
 
 jobs:
   post:
@@ -13,8 +13,8 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install requests
-      - name: Run Auto-Post
+      - name: Run Post
         env:
-          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+          FB_TOKEN: ${{ secrets.FB_TOKEN }}
           PAGE_ID: ${{ secrets.PAGE_ID }}
         run: python fb_autopost.py
