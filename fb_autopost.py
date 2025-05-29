@@ -3,6 +3,12 @@ import requests
 from datetime import datetime
 
 def post_to_facebook():
+    # Add these lines at the start of post_to_facebook()
+page_info = requests.get(
+    f"https://graph.facebook.com/{os.getenv('PAGE_ID')}",
+    params={'access_token': os.getenv('FB_TOKEN'), 'fields': 'name'}
+).json()
+print("PAGE VERIFICATION:", page_info)
     try:
         # Get credentials
         token = os.getenv('FB_TOKEN')
